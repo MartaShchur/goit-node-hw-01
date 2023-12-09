@@ -4,31 +4,28 @@ import * as contactService from "./contacts.js";
 
 // TODO: рефакторити
 
-const invokeAction = async ({ action, id, ...data }) => {
+const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case 'list':
       // ...
-      listContacts = await contactService.getListContacts();
-      console.log(listContacts);
-      break;
+      const listContacts = await contactService.getListContacts();
+      return console.log(listContacts);
 
     case 'get':
       // ... id
-      oneContact = await contactService.getContactById(id);
-      console.log(oneContact);
-    break;
-
+      const oneContact = await contactService.getContactById(id);
+      return console.log(oneContact);
+  
     case 'add':
       // ... name email phone
-      newContact = await contactService.addContact(data);
-      console.log(newContact);
-    break;
+      const newContact = await contactService.addContact(name, email, phone);
+      return console.log(newContact);
+   
 
     case 'remove':
       // ... id
-      delContact = await contactService.removeContact(id);
-      console.log(delContact);
-    break;
+      const delContact = await contactService.removeContact(id);
+      return console.log(delContact);
 
     default:
       console.warn('\x1B[31m Unknown action type!');

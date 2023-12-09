@@ -9,10 +9,10 @@ import { nanoid } from 'nanoid'
  * const contactsPath = ;
  */
 
-const contactsPath = path.resolve("contacts", "contacts.json");
+const contactsPath = path.resolve("db", "contacts.json");
 // console.log(contactsPath);
 
-const updateContacts = contacts => fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+// const updateContacts = contacts => fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 
 // TODO: задокументувати кожну функцію
 export const getListContacts = async () => {
@@ -38,19 +38,21 @@ export const removeContact = async (id) => {
         return null;
     }
     const [result] = contacts.splice(indexContact, 1);
-    await updateContacts(contacts);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
     return result;
 };
 
-export const addContact = async (data) => {
+export const addContact = async (name, email, phone) => {
     // ...твій код. Повертає об'єкт доданого контакту.
     const contacts = await getListContacts();
     const newContact = {
         id: nanoid(),
-       ...data,
+        name,
+        email,
+        phone,
     };
     contacts.push(newContact);
-    await updateContacts(contacts);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
     return newContact;
 };
 // console.log(addContact);
