@@ -9,22 +9,22 @@ import { nanoid } from 'nanoid'
  * const contactsPath = ;
  */
 
-const contactsPath = path.resolve("movies", "movies.json");
+const contactsPath = path.resolve("contacts", "contacts.json");
 // console.log(contactsPath);
 
 const updateContacts = contacts => fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 
 // TODO: задокументувати кожну функцію
-export const listContacts = async () => {
+export const getListContacts = async () => {
     // ...твій код. Повертає масив контактів.
     const data = await fs.readFile(contactsPath);
     return JSON.parse(data);
 };
-// console.log(listContacts);
+// console.log(getListContacts);
 
 export const getContactById = async (id) => {
     // ...твій код. Повертає об'єкт контакту з таким id. Повертає null, якщо контакт з таким id не знайдений.
-    const contacts = await listContacts();
+    const contacts = await getListContacts();
     const result = contacts.find(item => item.id === id);
     return result || null;
 };
@@ -32,7 +32,7 @@ export const getContactById = async (id) => {
 
 export const removeContact = async (id) => {
     // ...твій код. Повертає об'єкт видаленого контакту. Повертає null, якщо контакт з таким id не знайдений.
-    const contacts = await listContacts();
+    const contacts = await getListContacts();
     const indexContact = contacts.findIndex(item => item.id === id);
     if (indexContact === -1) {
         return null;
@@ -44,7 +44,7 @@ export const removeContact = async (id) => {
 
 export const addContact = async (data) => {
     // ...твій код. Повертає об'єкт доданого контакту.
-    const contacts = await listContacts();
+    const contacts = await getListContacts();
     const newContact = {
         id: nanoid(),
        ...data,
